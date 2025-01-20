@@ -25,7 +25,7 @@ class EventsUpdateViewModel(
         }
     }
 
-    fun updateInsertMhsState(insertUiEvent: InsertUiEvent){
+    fun updateInsertEvntState(insertUiEvent: InsertUiEvent){
         updateUiState = InsertUiState(insertUiEvent = insertUiEvent)
     }
 
