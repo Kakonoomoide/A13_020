@@ -3,21 +3,21 @@ package com.example.eventorganizer.model
 import kotlinx.serialization.*
 
 @Serializable
-data class AllEventResponse (
+data class AllEventsResponse (
     val status: Boolean,
     val message: String,
-    val data: List<Event>
+    val data: List<Events>
 )
 
 @Serializable
-data class EventDetailResponse (
+data class EventsDetailResponse (
     val status: Boolean,
     val message: String,
-    val data: Event
+    val data: Events
 )
 
 @Serializable
-data class Event (
+data class Events (
     @SerialName("id_event")
     val idEvent: Long,
 
