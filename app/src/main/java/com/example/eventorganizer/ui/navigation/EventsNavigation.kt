@@ -49,29 +49,27 @@ fun EventsNavigation(
         }
 
         // detail
-        composable(DestinasiDetail.routesWithArg, arguments = listOf(navArgument(DestinasiDetail.IdEvent) {
-            type = NavType.StringType }
-        )
-        ){
-            val idEvent = it.arguments?.getString(DestinasiDetail.IdEvent)
+        composable(DestinasiDetail.routesWithArg, arguments = listOf(
+            navArgument(DestinasiDetail.IdEvent) {
+            type = NavType.IntType }
+        )){
+            val idEvent = it.arguments?.getInt(DestinasiDetail.IdEvent)
             idEvent?.let { idEvent ->
                 EventsDetailView(
                     navigateToItemUpdate = { navController.navigate("${DestinasiUpdate.route}/$idEvent") },
                     navigateBack = { navController.navigate(DestinasiHome.route) {
                         popUpTo(DestinasiHome.route) { inclusive = true }
-                    }
-                    }
+                    }}
                 )
             }
         }
 
         // update
-        composable(DestinasiUpdate.routesWithArg, arguments = listOf(navArgument(DestinasiDetail.IdEvent){
-            type = NavType.StringType
-        }
-        )
-        ){
-            val idEvent = it.arguments?.getString(DestinasiUpdate.IdEvent)
+        composable(DestinasiUpdate.routesWithArg, arguments = listOf(
+            navArgument(DestinasiDetail.IdEvent){
+            type = NavType.IntType }
+        )){
+            val idEvent = it.arguments?.getInt(DestinasiUpdate.IdEvent)
             idEvent?.let { idEvents ->
                 EventsUpdateView(
                     onBack = { navController.popBackStack() },

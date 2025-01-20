@@ -20,9 +20,9 @@ import kotlinx.coroutines.withContext
 
 object DestinasiUpdate: DestinasiNavigasi {
     override val route = "update"
-    override val titleRes = "Update Mhs"
+    override val titleRes = "Update Event"
     const val IdEvent = "idEvent"
-    val routesWithArg = "${DestinasiDetail.route}/{$IdEvent}"
+    val routesWithArg = "$route/{$IdEvent}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
