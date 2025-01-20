@@ -10,7 +10,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -29,7 +28,7 @@ import com.example.eventorganizer.model.Events
 import com.example.eventorganizer.ui.PenyediaViewModel
 import com.example.eventorganizer.ui.costumwidget.CoustumeTopAppBar
 import com.example.eventorganizer.ui.event.viewmodel.DetailUiState
-import com.example.eventorganizer.ui.event.viewmodel.DetailViewModel
+import com.example.eventorganizer.ui.event.viewmodel.EventsDetailViewModel
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 
 object DestinasiDetail: DestinasiNavigasi {
@@ -45,7 +44,7 @@ fun EventsDetailView(
     navigateBack: () -> Unit,
     navigateToItemUpdate: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: DetailViewModel = viewModel(factory = PenyediaViewModel.Factory)
+    viewModel: EventsDetailViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
     Scaffold(
         topBar = {

@@ -6,13 +6,42 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.eventorganizer.EventsApplications
+import com.example.eventorganizer.ui.event.viewmodel.EventsDetailViewModel
 import com.example.eventorganizer.ui.event.viewmodel.EventsHomeViewModel
+import com.example.eventorganizer.ui.event.viewmodel.EventsInsertViewModel
+import com.example.eventorganizer.ui.event.viewmodel.EventsUpdateViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
         // home viewmodel
         initializer {
             EventsHomeViewModel(
+                aplikasiEO()
+                    .container
+                    .eventsRepository
+            )
+        }
+        // insert viewmodel
+        initializer {
+            EventsInsertViewModel(
+                aplikasiEO()
+                    .container
+                    .eventsRepository
+            )
+        }
+        // detail viewmodel
+        initializer {
+            EventsDetailViewModel(
+                createSavedStateHandle(),
+                aplikasiEO()
+                    .container
+                    .eventsRepository
+            )
+        }
+        // update viewmodel
+        initializer {
+            EventsUpdateViewModel(
+                createSavedStateHandle(),
                 aplikasiEO()
                     .container
                     .eventsRepository

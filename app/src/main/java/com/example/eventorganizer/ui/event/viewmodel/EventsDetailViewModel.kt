@@ -19,7 +19,7 @@ sealed class DetailUiState {
     object Loading : DetailUiState()
 }
 
-class DetailViewModel(
+class EventsDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val evnt: EventsRepository
 ) : ViewModel() {
