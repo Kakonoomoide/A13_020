@@ -28,13 +28,13 @@ interface EventsService{
 
     // get data by id
     @GET("{id_event}")
-    suspend fun getEventsById(@Path("id_event") idEvent: String): EventsDetailResponse
+    suspend fun getEventsById(@Path("id_event") idEvent: Int): EventsDetailResponse
 
     // update data by id
     @PUT("{id_event}")
-    suspend fun updateEvents(@Path("id_event") idEvent: String, @Body event: Events)
+    suspend fun updateEvents(@Path("id_event") idEvent: Int, @Body event: Events)
 
     // delete data by id
     @DELETE("{id_event}")
-    suspend fun deleteEvents(@Path("id_event") idEvent: String): Response<Void>
+    suspend fun deleteEvents(@Path("id_event") idEvent: Int): Response<Void>
 }

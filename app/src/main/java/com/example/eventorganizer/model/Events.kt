@@ -19,7 +19,7 @@ data class EventsDetailResponse (
 @Serializable
 data class Events (
     @SerialName("id_event")
-    val idEvent: Long,
+    val idEvent: Int,
 
     @SerialName("nama_event")
     val namaEvent: String,

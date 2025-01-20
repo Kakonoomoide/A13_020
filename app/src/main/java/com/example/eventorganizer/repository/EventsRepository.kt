@@ -10,11 +10,11 @@ interface EventsRepository{
 
     suspend fun getAllEvents(): AllEventsResponse
 
-    suspend fun updateEvents(idEvent: String, events: Events)
+    suspend fun updateEvents(idEvent: Int, events: Events)
 
-    suspend fun deleteEvents(idEvent: String)
+    suspend fun deleteEvents(idEvent: Int)
 
-    suspend fun getEventsById(idEvent: String): Events
+    suspend fun getEventsById(idEvent: Int): Events
 }
 
 class EventsApiHandler(
@@ -28,11 +28,11 @@ class EventsApiHandler(
         return eventsApiService.getAllEvents()
     }
 
-    override suspend fun updateEvents(idEvent: String, events: Events) {
+    override suspend fun updateEvents(idEvent: Int, events: Events) {
         eventsApiService.updateEvents(idEvent, events)
     }
 
-    override suspend fun deleteEvents(idEvent: String) {
+    override suspend fun deleteEvents(idEvent: Int) {
         try {
             val response = eventsApiService.deleteEvents(idEvent)
             if (!response.isSuccessful){
@@ -47,7 +47,7 @@ class EventsApiHandler(
         }
     }
 
-    override suspend fun getEventsById(idEvent: String): Events {
+    override suspend fun getEventsById(idEvent: Int): Events {
         return eventsApiService.getEventsById(idEvent).data
     }
 
