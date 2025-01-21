@@ -1,5 +1,6 @@
 package com.example.eventorganizer.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -12,6 +13,7 @@ import com.example.eventorganizer.ui.pages.peserta.view.DestinasiDetailParticipa
 import com.example.eventorganizer.ui.pages.peserta.view.DestinasiEntryParticipants
 import com.example.eventorganizer.ui.pages.peserta.view.DestinasiHomeParticipants
 import com.example.eventorganizer.ui.pages.peserta.view.DestinasiUpdateParticipants
+import com.example.eventorganizer.ui.pages.peserta.view.ParticipantsDetailView
 import com.example.eventorganizer.ui.pages.peserta.view.ParticipantsHomeView
 import com.example.eventorganizer.ui.pages.peserta.view.ParticipantsInsertView
 import com.example.eventorganizer.ui.pages.peserta.view.ParticipantsUpdateView
@@ -33,6 +35,7 @@ fun ParticipantsNavigation(
             ParticipantsHomeView(
                 navigateToltemEntry = { navController.navigate(DestinasiEntryParticipants.route) },
                 onDetailClick = { idPeserta ->
+                    Log.d("ParticipantsHome", "ID Peserta: $idPeserta")
                     navController.navigate("${DestinasiDetailParticipants.route}/$idPeserta")
                 }
             )
@@ -51,15 +54,15 @@ fun ParticipantsNavigation(
 
         // detail
         composable(
-            DestinasiDetailTickets.routesWithArg, arguments = listOf(
-                navArgument(DestinasiDetailTickets.IdTickets) {
+            DestinasiDetailParticipants.routesWithArg, arguments = listOf(
+                navArgument(DestinasiDetailParticipants.IdParticipants) {
                     type = NavType.IntType }
             )){
-            val idPrcp = it.arguments?.getInt(DestinasiDetailTickets.IdTickets)
+            val idPrcp = it.arguments?.getInt(DestinasiDetailParticipants.IdParticipants)
             idPrcp?.let { idPeserta ->
-                ParticipantsUpdateView(
-                    onNavigate = { navController.navigate("${DestinasiUpdateParticipants.route}/$idPeserta") },
-                    onBack = { navController.navigate(DestinasiHomeParticipants.route) {
+                ParticipantsDetailView(
+                    navigateToItemUpdate = { navController.navigate("${DestinasiUpdateParticipants.route}/$idPeserta") },
+                    navigateBack = { navController.navigate(DestinasiHomeParticipants.route) {
                         popUpTo(DestinasiHomeParticipants.route) {
                             inclusive = true
                         }
@@ -70,13 +73,13 @@ fun ParticipantsNavigation(
 
         // update
         composable(
-            DestinasiUpdateTickets.routesWithArg, arguments = listOf(
-                navArgument(DestinasiDetailTickets.IdTickets){
+            DestinasiUpdateParticipants.routesWithArg, arguments = listOf(
+                navArgument(DestinasiUpdateParticipants.IdParticipants){
                     type = NavType.IntType }
             )){
-            val idPrcp = it.arguments?.getInt(DestinasiUpdateTickets.IdTickets)
+            val idPrcp = it.arguments?.getInt(DestinasiUpdateParticipants.IdParticipants)
             idPrcp?.let { idPeserta ->
-                UpdateTicketsView(
+                ParticipantsUpdateView(
                     onBack = { navController.popBackStack() },
                     onNavigate = { navController.popBackStack() }
                 )
