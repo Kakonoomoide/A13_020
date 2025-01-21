@@ -20,14 +20,14 @@ import kotlinx.coroutines.withContext
 
 object DestinasiUpdateTickets: DestinasiNavigasi {
     override val route = "update"
-    override val titleRes = "Update Event"
-    const val IdEvent = "idEvent"
-    val routesWithArg = "$route/{$IdEvent}"
+    override val titleRes = "Update Tiket"
+    const val IdTickets = "idTiket"
+    val routesWithArg = "$route/{$IdTickets}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EventsUpdateView(
+fun UpdateTicketsView(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     onNavigate:()-> Unit,

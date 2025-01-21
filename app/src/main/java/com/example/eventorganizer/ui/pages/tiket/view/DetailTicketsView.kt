@@ -40,7 +40,7 @@ object DestinasiDetailTickets: DestinasiNavigasi {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EventsDetailView(
+fun DetailTicketsView(
     navigateBack: () -> Unit,
     navigateToItemUpdate: () -> Unit,
     modifier: Modifier = Modifier,

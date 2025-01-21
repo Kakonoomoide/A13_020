@@ -17,7 +17,7 @@ class UpdateTicketsViewModel (
     var updateUiState by mutableStateOf(InsertTicketsUiState())
         private set
 
-    private val _idTiket: Int = checkNotNull(savedStateHandle[DestinasiUpdateTickets.IdEvent])
+    private val _idTiket: Int = checkNotNull(savedStateHandle[DestinasiUpdateTickets.IdTickets])
 
     init {
         viewModelScope.launch {
