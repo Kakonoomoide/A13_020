@@ -138,15 +138,9 @@ fun FormInput(
             value = insertUiEvent.namaEvent,
             onValueChange = { onValueChange(insertUiEvent.copy(namaEvent = it)) },
             label = { Text("Nama Event") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable{
-                    if (enabled) {
-                        datePickerDialog.show()
-                    }
-                },
+            modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
-            singleLine = true
+            singleLine = true,
         )
 
         // deskripsi event
@@ -159,17 +153,25 @@ fun FormInput(
             singleLine = false
         )
 
+
         // tanggal event
         OutlinedTextField(
             value = insertUiEvent.tanggalEvent,
             onValueChange = { onValueChange(insertUiEvent.copy(tanggalEvent = it)) },
             label = { Text("Tanggal Event") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable{
+                    if (enabled) {
+                        datePickerDialog.show()
+                    }
+                },
             enabled = enabled,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text // Use Text, since the date picker will handle input
             )
+
         )
 
         // lokasi event
