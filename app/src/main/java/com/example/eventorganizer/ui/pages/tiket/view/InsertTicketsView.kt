@@ -28,7 +28,7 @@ import com.example.eventorganizer.ui.pages.tiket.viewmodel.InsertTicketsUiState
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.InsertTicketsViewModel
 import kotlinx.coroutines.launch
 
-object DestinasiEntry : DestinasiNavigasi {
+object DestinasiEntryTiket : DestinasiNavigasi {
     override val route = "tickets_entry"
     override val titleRes = "Entry Tickets"
 }
@@ -47,7 +47,7 @@ fun EventsInsertView(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CoustumeTopAppBar(
-                title = DestinasiEntry.titleRes,
+                title = DestinasiEntryTiket.titleRes,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack

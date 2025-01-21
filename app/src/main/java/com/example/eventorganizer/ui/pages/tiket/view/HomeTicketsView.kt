@@ -40,7 +40,7 @@ import com.example.eventorganizer.ui.pages.tiket.viewmodel.HomeTicketsUiState
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.HomeTicketsViewModel
 
 
-object DestinasiHome : DestinasiNavigasi {
+object DestinasiHomeTiket : DestinasiNavigasi {
     override val route = "home"
     override val titleRes = "Home Tiket"
 }
@@ -58,7 +58,7 @@ fun EventsHomeView(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CoustumeTopAppBar(
-                title = DestinasiHome.titleRes,
+                title = DestinasiHomeTiket.titleRes,
                 canNavigateBack = false,
                 scrollBehavior = scrollBehavior,
                 onRefresh = {
