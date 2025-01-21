@@ -20,7 +20,7 @@ data class ParticipantDetailResponse (
 @Serializable
 data class Participant (
     @SerialName("id_peserta")
-    val idPeserta: Long,
+    val idPeserta: Int,
 
     @SerialName("nama_peserta")
     val namaPeserta: String,
