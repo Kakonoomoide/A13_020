@@ -27,7 +27,7 @@ class HomeTicketsViewModel (
         getTkt()
     }
 
-    private fun getTkt() {
+    fun getTkt() {
         viewModelScope.launch {
             tktUiState = HomeTicketsUiState.Loading
             tktUiState = try {
