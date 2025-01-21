@@ -9,7 +9,7 @@ import com.example.eventorganizer.model.Participant
 import com.example.eventorganizer.repository.ParticipantsRepository
 import kotlinx.coroutines.launch
 
-class EventsInsertViewModel(
+class InsertParticipantViewModel(
     private val prcp: ParticipantsRepository
 ): ViewModel() {
     var uiState by mutableStateOf(ParticipantsInsertUiState())
