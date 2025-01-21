@@ -10,6 +10,10 @@ import com.example.eventorganizer.ui.pages.event.viewmodel.EventsDetailViewModel
 import com.example.eventorganizer.ui.pages.event.viewmodel.EventsHomeViewModel
 import com.example.eventorganizer.ui.pages.event.viewmodel.EventsInsertViewModel
 import com.example.eventorganizer.ui.pages.event.viewmodel.EventsUpdateViewModel
+import com.example.eventorganizer.ui.pages.peserta.viewmodel.DetailParticipantsViewModel
+import com.example.eventorganizer.ui.pages.peserta.viewmodel.HomeParticipantViewModel
+import com.example.eventorganizer.ui.pages.peserta.viewmodel.InsertParticipantViewModel
+import com.example.eventorganizer.ui.pages.peserta.viewmodel.UpdateParticipantViewModel
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.DetailTicketsViewModel
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.HomeTicketsViewModel
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.InsertTicketsViewModel
@@ -86,6 +90,42 @@ object PenyediaViewModel {
                 aplikasiEO()
                     .container
                     .ticketsRepository
+            )
+        }
+
+        // Participants
+        // home viewmodel
+        initializer {
+            HomeParticipantViewModel(
+                aplikasiEO()
+                    .container
+                    .participantsRepository
+            )
+        }
+        // insert viewmodel
+        initializer {
+            InsertParticipantViewModel(
+                aplikasiEO()
+                    .container
+                    .participantsRepository
+            )
+        }
+        // detail viewmodel
+        initializer {
+            DetailParticipantsViewModel(
+                createSavedStateHandle(),
+                aplikasiEO()
+                    .container
+                    .participantsRepository
+            )
+        }
+        // update viewmodel
+        initializer {
+            UpdateParticipantViewModel(
+                createSavedStateHandle(),
+                aplikasiEO()
+                    .container
+                    .participantsRepository
             )
         }
     }
