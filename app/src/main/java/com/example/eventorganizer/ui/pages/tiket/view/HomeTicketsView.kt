@@ -212,22 +212,30 @@ fun TicketsCardDispaly(
                     )
                 }
             }
-            Text(
-                text = tickets.namaEvent,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = tickets.namaPeserta,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = tickets.tanggalEvent,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = tickets.lokasiEvent,
-                style = MaterialTheme.typography.titleMedium
-            )
+            tickets.namaEvent?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            tickets.namaPeserta?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            tickets.tanggalEvent?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            tickets.lokasiEvent?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
     }
 }

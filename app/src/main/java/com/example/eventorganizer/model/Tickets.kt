@@ -35,14 +35,14 @@ data class Tickets (
     val hargaTiket: Int,
 
     @SerialName("nama_event")
-    val namaEvent: String,
+    val namaEvent: String? = "",
 
     @SerialName("tanggal_event")
-    val tanggalEvent: String,
+    val tanggalEvent: String? = "",
 
     @SerialName("lokasi_event")
-    val lokasiEvent: String,
+    val lokasiEvent: String? = "",
 
     @SerialName("nama_peserta")
-    val namaPeserta: String
+    val namaPeserta: String? = ""
 )

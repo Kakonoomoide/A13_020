@@ -1,5 +1,6 @@
 package com.example.eventorganizer.ui.pages.tiket.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -38,6 +39,7 @@ class DetailTicketsViewModel(
             TicketsDetailState = DetailTicketsUiState.Loading
             TicketsDetailState = try {
                 val tickets = tkt.getTicketsById(_idTiket)
+                Log.d("TicketDetails", "Response: $tickets")
                 DetailTicketsUiState.Success(tickets)
             } catch (e: IOException) {
                 DetailTicketsUiState.Error

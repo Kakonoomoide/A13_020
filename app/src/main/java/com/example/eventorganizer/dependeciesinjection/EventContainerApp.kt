@@ -25,11 +25,13 @@ class EventContainerApp : AppEventsContainer {
     // Retrofit instance untuk komunikasi dengan API
     private val retrofitEvents: Retrofit = Retrofit.Builder()
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-        .baseUrl(eventsBaseUrl).build()
+        .baseUrl(eventsBaseUrl)
+        .build()
 
     private val retrofitTickets: Retrofit = Retrofit.Builder()
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-        .baseUrl(ticketsBaseUrl).build()
+        .baseUrl(ticketsBaseUrl)
+        .build()
 
     // Layanan API untuk events
     private val eventsService: EventsService by lazy {

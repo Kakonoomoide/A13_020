@@ -38,10 +38,10 @@ data class InsertTicketsUiEvent(
     val idPengguna: Int = 0,
     val kapasitasTiket: Int = 0,
     val hargaTiket: Int = 0,
-    val namaEvent: String = "",
-    val tanggalEvent: String = "",
-    val lokasiEvent: String = "",
-    val namaPeserta: String = ""
+    val namaEvent: String? = "",
+    val tanggalEvent: String? = "",
+    val lokasiEvent: String? = "",
+    val namaPeserta: String? = ""
 )
 
 fun InsertTicketsUiEvent.toTkt(): Tickets = Tickets(

@@ -124,13 +124,13 @@ fun ItemDetailEvnt(
         ) {
             ComponentDetailTkt(judul = "Id Ticket", isinya = ticket.idTiket.toString())
             Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailTkt(judul = "Nama Event", isinya = ticket.namaEvent)
+            ticket.namaEvent?.let { ComponentDetailTkt(judul = "Nama Event", isinya = it) }
             Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailTkt(judul = "Nama Peserta", isinya = ticket.namaPeserta)
+            ticket.namaPeserta?.let { ComponentDetailTkt(judul = "Nama Peserta", isinya = it) }
             Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailTkt(judul = "Tanggal Event", isinya = ticket.tanggalEvent)
+            ticket.tanggalEvent?.let { ComponentDetailTkt(judul = "Tanggal Event", isinya = it) }
             Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailTkt(judul = "Lokasi", isinya = ticket.lokasiEvent)
+            ticket.lokasiEvent?.let { ComponentDetailTkt(judul = "Lokasi", isinya = it) }
             Spacer(modifier = Modifier.padding(5.dp))
             ComponentDetailTkt(judul = "Harga Tiket", isinya = ticket.hargaTiket.toString())
             Spacer(modifier = Modifier.padding(5.dp))
