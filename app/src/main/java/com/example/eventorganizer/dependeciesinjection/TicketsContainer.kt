@@ -12,7 +12,7 @@ interface AppContainer{
     val ticketsRepository: TicketsRepository
 }
 
-class MahasiswaContainer: AppContainer {
+class TicketsContainer: AppContainer {
     private val baseUrl = "http://10.0.2.2:3000/api/event/"
     private val json = Json { ignoreUnknownKeys = true }
     private val retrofit: Retrofit = Retrofit.Builder()
