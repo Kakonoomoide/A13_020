@@ -10,6 +10,10 @@ import com.example.eventorganizer.ui.pages.event.viewmodel.EventsDetailViewModel
 import com.example.eventorganizer.ui.pages.event.viewmodel.EventsHomeViewModel
 import com.example.eventorganizer.ui.pages.event.viewmodel.EventsInsertViewModel
 import com.example.eventorganizer.ui.pages.event.viewmodel.EventsUpdateViewModel
+import com.example.eventorganizer.ui.pages.tiket.viewmodel.DetailTicketsViewModel
+import com.example.eventorganizer.ui.pages.tiket.viewmodel.HomeTicketsViewModel
+import com.example.eventorganizer.ui.pages.tiket.viewmodel.InsertTicketsViewModel
+import com.example.eventorganizer.ui.pages.tiket.viewmodel.UpdateTicketsViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
@@ -46,6 +50,42 @@ object PenyediaViewModel {
                 aplikasiEO()
                     .container
                     .eventsRepository
+            )
+        }
+
+        // Tickets
+        // home viewmodel
+        initializer {
+            HomeTicketsViewModel(
+                aplikasiEO()
+                    .container
+                    .ticketsRepository
+            )
+        }
+        // insert viewmodel
+        initializer {
+            InsertTicketsViewModel(
+                aplikasiEO()
+                    .container
+                    .ticketsRepository
+            )
+        }
+        // detail viewmodel
+        initializer {
+            DetailTicketsViewModel(
+                createSavedStateHandle(),
+                aplikasiEO()
+                    .container
+                    .ticketsRepository
+            )
+        }
+        // update viewmodel
+        initializer {
+            UpdateTicketsViewModel(
+                createSavedStateHandle(),
+                aplikasiEO()
+                    .container
+                    .ticketsRepository
             )
         }
     }
