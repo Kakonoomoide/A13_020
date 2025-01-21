@@ -9,14 +9,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.eventorganizer.ui.event.view.DestinasiDetail
-import com.example.eventorganizer.ui.event.view.DestinasiEntry
-import com.example.eventorganizer.ui.event.view.DestinasiHome
-import com.example.eventorganizer.ui.event.view.DestinasiUpdate
-import com.example.eventorganizer.ui.event.view.EventsDetailView
-import com.example.eventorganizer.ui.event.view.EventsHomeView
-import com.example.eventorganizer.ui.event.view.EventsInsertView
-import com.example.eventorganizer.ui.event.view.EventsUpdateView
+import com.example.eventorganizer.ui.pages.event.view.DestinasiDetail
+import com.example.eventorganizer.ui.pages.event.view.DestinasiEntry
+import com.example.eventorganizer.ui.pages.event.view.DestinasiHome
+import com.example.eventorganizer.ui.pages.event.view.DestinasiUpdate
+import com.example.eventorganizer.ui.pages.event.view.EventsDetailView
+import com.example.eventorganizer.ui.pages.event.view.EventsHomeView
+import com.example.eventorganizer.ui.pages.event.view.EventsInsertView
+import com.example.eventorganizer.ui.pages.event.view.EventsUpdateView
 
 @Composable
 fun EventsNavigation(
@@ -49,7 +49,8 @@ fun EventsNavigation(
         }
 
         // detail
-        composable(DestinasiDetail.routesWithArg, arguments = listOf(
+        composable(
+            DestinasiDetail.routesWithArg, arguments = listOf(
             navArgument(DestinasiDetail.IdEvent) {
             type = NavType.IntType }
         )){
@@ -65,7 +66,8 @@ fun EventsNavigation(
         }
 
         // update
-        composable(DestinasiUpdate.routesWithArg, arguments = listOf(
+        composable(
+            DestinasiUpdate.routesWithArg, arguments = listOf(
             navArgument(DestinasiDetail.IdEvent){
             type = NavType.IntType }
         )){

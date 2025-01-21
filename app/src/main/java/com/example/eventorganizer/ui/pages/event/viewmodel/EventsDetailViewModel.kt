@@ -1,4 +1,4 @@
-package com.example.eventorganizer.ui.event.viewmodel
+package com.example.eventorganizer.ui.pages.event.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventorganizer.model.Events
 import com.example.eventorganizer.repository.EventsRepository
-import com.example.eventorganizer.ui.event.view.DestinasiDetail
+import com.example.eventorganizer.ui.pages.event.view.DestinasiDetail
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException

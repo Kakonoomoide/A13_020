@@ -1,4 +1,4 @@
-package com.example.eventorganizer.ui.event.viewmodel
+package com.example.eventorganizer.ui.pages.event.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventorganizer.repository.EventsRepository
-import com.example.eventorganizer.ui.event.view.DestinasiUpdate
+import com.example.eventorganizer.ui.pages.event.view.DestinasiUpdate
 import kotlinx.coroutines.launch
 
 class EventsUpdateViewModel(

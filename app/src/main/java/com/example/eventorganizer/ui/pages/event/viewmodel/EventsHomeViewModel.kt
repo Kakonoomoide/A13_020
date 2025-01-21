@@ -1,4 +1,4 @@
-package com.example.eventorganizer.ui.event.viewmodel
+package com.example.eventorganizer.ui.pages.event.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

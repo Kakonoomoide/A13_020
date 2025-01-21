@@ -6,10 +6,10 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.eventorganizer.EventsApplications
-import com.example.eventorganizer.ui.event.viewmodel.EventsDetailViewModel
-import com.example.eventorganizer.ui.event.viewmodel.EventsHomeViewModel
-import com.example.eventorganizer.ui.event.viewmodel.EventsInsertViewModel
-import com.example.eventorganizer.ui.event.viewmodel.EventsUpdateViewModel
+import com.example.eventorganizer.ui.pages.event.viewmodel.EventsDetailViewModel
+import com.example.eventorganizer.ui.pages.event.viewmodel.EventsHomeViewModel
+import com.example.eventorganizer.ui.pages.event.viewmodel.EventsInsertViewModel
+import com.example.eventorganizer.ui.pages.event.viewmodel.EventsUpdateViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {

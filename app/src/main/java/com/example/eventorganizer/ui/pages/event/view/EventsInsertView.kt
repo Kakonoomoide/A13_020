@@ -1,4 +1,4 @@
-package com.example.eventorganizer.ui.event.view
+package com.example.eventorganizer.ui.pages.event.view
 
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
@@ -32,9 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.eventorganizer.ui.PenyediaViewModel
 import com.example.eventorganizer.ui.costumwidget.CoustumeTopAppBar
-import com.example.eventorganizer.ui.event.viewmodel.EventsInsertViewModel
-import com.example.eventorganizer.ui.event.viewmodel.InsertUiEvent
-import com.example.eventorganizer.ui.event.viewmodel.InsertUiState
+import com.example.eventorganizer.ui.pages.event.viewmodel.EventsInsertViewModel
+import com.example.eventorganizer.ui.pages.event.viewmodel.InsertUiEvent
+import com.example.eventorganizer.ui.pages.event.viewmodel.InsertUiState
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 import kotlinx.coroutines.launch
 

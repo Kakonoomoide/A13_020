@@ -1,4 +1,4 @@
-package com.example.eventorganizer.ui.event.view
+package com.example.eventorganizer.ui.pages.event.view
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,7 +11,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.eventorganizer.ui.PenyediaViewModel
 import com.example.eventorganizer.ui.costumwidget.CoustumeTopAppBar
-import com.example.eventorganizer.ui.event.viewmodel.EventsUpdateViewModel
+import com.example.eventorganizer.ui.pages.event.viewmodel.EventsUpdateViewModel
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

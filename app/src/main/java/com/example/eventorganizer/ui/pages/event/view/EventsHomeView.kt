@@ -1,4 +1,4 @@
-package com.example.eventorganizer.ui.event.view
+package com.example.eventorganizer.ui.pages.event.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,8 +35,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.eventorganizer.model.Events
 import com.example.eventorganizer.ui.PenyediaViewModel
 import com.example.eventorganizer.ui.costumwidget.CoustumeTopAppBar
-import com.example.eventorganizer.ui.event.viewmodel.EventsHomeViewModel
-import com.example.eventorganizer.ui.event.viewmodel.HomeUiState
+import com.example.eventorganizer.ui.pages.event.viewmodel.EventsHomeViewModel
+import com.example.eventorganizer.ui.pages.event.viewmodel.HomeUiState
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 
 object DestinasiHome : DestinasiNavigasi {

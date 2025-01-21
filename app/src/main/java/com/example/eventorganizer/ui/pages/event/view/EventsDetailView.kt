@@ -1,4 +1,4 @@
-package com.example.eventorganizer.ui.event.view
+package com.example.eventorganizer.ui.pages.event.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,8 +27,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.eventorganizer.model.Events
 import com.example.eventorganizer.ui.PenyediaViewModel
 import com.example.eventorganizer.ui.costumwidget.CoustumeTopAppBar
-import com.example.eventorganizer.ui.event.viewmodel.DetailUiState
-import com.example.eventorganizer.ui.event.viewmodel.EventsDetailViewModel
+import com.example.eventorganizer.ui.pages.event.viewmodel.DetailUiState
+import com.example.eventorganizer.ui.pages.event.viewmodel.EventsDetailViewModel
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 
 object DestinasiDetail: DestinasiNavigasi {
