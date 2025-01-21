@@ -1,6 +1,5 @@
 package com.example.eventorganizer.ui.pages.tiket.viewmodel
 
-import android.provider.ContactsContract.Intents.Insert
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,7 +13,7 @@ class InsertTicketsViewModel(private val tkt:TicketsRepository): ViewModel(){
     var uiState by mutableStateOf(InsertTicketsUiState())
         private set
 
-    fun updateInsertMhsState(insertTicketsUiEvent: InsertTicketsUiEvent) {
+    fun insertDataUpdateTicktetState(insertTicketsUiEvent: InsertTicketsUiEvent) {
         uiState = InsertTicketsUiState(insertTicketsUiEvent = insertTicketsUiEvent)
     }
 
