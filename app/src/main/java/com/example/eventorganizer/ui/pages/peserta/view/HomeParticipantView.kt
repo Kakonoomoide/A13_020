@@ -46,7 +46,7 @@ object DestinasiHomeParticipants : DestinasiNavigasi {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EventsHomeView(
+fun ParticipantsHomeView(
     navigateToltemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
