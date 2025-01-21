@@ -13,6 +13,7 @@ import com.example.eventorganizer.ui.pages.event.viewmodel.EventsUpdateViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
+        // events
         // home viewmodel
         initializer {
             EventsHomeViewModel(

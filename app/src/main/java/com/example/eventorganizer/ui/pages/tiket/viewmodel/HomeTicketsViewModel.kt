@@ -11,16 +11,16 @@ import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException
 
-sealed class HomeUiState {
-    data class Success(val tickets: List<Tickets>) : HomeUiState()
-    object Error : HomeUiState()
-    object Loading : HomeUiState()
+sealed class HomeTicketsUiState {
+    data class Success(val tickets: List<Tickets>) : HomeTicketsUiState()
+    object Error : HomeTicketsUiState()
+    object Loading : HomeTicketsUiState()
 }
 
 class HomeTicketsViewModel (
     private val tkt: TicketsRepository
 ) : ViewModel() {
-    var tktUiState: HomeUiState by mutableStateOf(HomeUiState.Loading)
+    var tktUiState: HomeTicketsUiState by mutableStateOf(HomeTicketsUiState.Loading)
         private set
 
     init {
@@ -29,13 +29,13 @@ class HomeTicketsViewModel (
 
     private fun getTkt() {
         viewModelScope.launch {
-            tktUiState = HomeUiState.Loading
+            tktUiState = HomeTicketsUiState.Loading
             tktUiState = try {
-                HomeUiState.Success(tkt.getAllTickets().data)
+                HomeTicketsUiState.Success(tkt.getAllTickets().data)
             } catch (e: IOException) {
-                HomeUiState.Error
+                HomeTicketsUiState.Error
             } catch (e: HttpException) {
-                HomeUiState.Error
+                HomeTicketsUiState.Error
             }
         }
     }
@@ -45,9 +45,9 @@ class HomeTicketsViewModel (
             try {
                 tkt.deleteTickets(IdTickets)
             } catch (e: IOException) {
-                HomeUiState.Error
+                HomeTicketsUiState.Error
             } catch (e: HttpException) {
-                HomeUiState.Error
+                HomeTicketsUiState.Error
             }
         }
     }
