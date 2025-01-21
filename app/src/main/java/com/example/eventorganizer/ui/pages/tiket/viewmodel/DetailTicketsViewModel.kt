@@ -19,7 +19,7 @@ sealed class DetailTicketsUiState {
     object Loading : DetailTicketsUiState()
 }
 
-class DetailViewModel(
+class DetailTicketsViewModel(
     savedStateHandle: SavedStateHandle,
     private val tkt : TicketsRepository
 ) : ViewModel() {

@@ -2,9 +2,9 @@ package com.example.eventorganizer.ui.pages.tiket.view
 
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 
-object DestinasiDetailTickets: DestinasiNavigasi {
-    override val route = "detail"
-    override val titleRes = "Detail Tickets"
-    const val IdTickets = "idTiket"
-    val routesWithArg = "$route/{$IdTickets}"
+object DestinasiUpdateTickets: DestinasiNavigasi {
+    override val route = "update"
+    override val titleRes = "Update Event"
+    const val IdEvent = "idEvent"
+    val routesWithArg = "$route/{$IdEvent}"
 }
