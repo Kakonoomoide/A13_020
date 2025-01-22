@@ -13,7 +13,7 @@ class InsertTransactionsViewModel(private val trx: TransactionsRepository): View
     var uiState by mutableStateOf(InsertTransactionsUiState())
         private set
 
-    fun insertDataUpdateTicktetState(insertTransactionsUiEvent: InsertTransactionsUiEvent) {
+    fun insertDataUpdateTransactionsState(insertTransactionsUiEvent: InsertTransactionsUiEvent) {
         uiState = InsertTransactionsUiState(insertTransactionsUiEvent = insertTransactionsUiEvent)
     }
 
