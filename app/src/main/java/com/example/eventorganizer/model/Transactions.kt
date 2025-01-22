@@ -10,7 +10,8 @@ data class AllTransactionResponse (
     val data: List<Transactions>
 )
 
-data class TransactionDetailResponse (
+@Serializable
+data class TransactionDetailResponse(
     val status: Boolean,
     val message: String,
     val data: Transactions

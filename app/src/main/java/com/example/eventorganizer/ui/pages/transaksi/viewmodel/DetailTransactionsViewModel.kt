@@ -38,9 +38,9 @@ class DetailTransactionsViewModel(
         viewModelScope.launch {
             transactionsDetailState = DetailTransactionsUiState.Loading
             transactionsDetailState = try {
-                val tickets = trx.getTransactionsById(_idTransactions)
-                Log.d("TicketDetails", "Response: $tickets")
-                DetailTransactionsUiState.Success(tickets)
+                val transactions = trx.getTransactionsById(_idTransactions)
+                Log.d("TicketDetails", "Response: $transactions")
+                DetailTransactionsUiState.Success(transactions)
             } catch (e: IOException) {
                 DetailTransactionsUiState.Error
             } catch (e: HttpException) {
