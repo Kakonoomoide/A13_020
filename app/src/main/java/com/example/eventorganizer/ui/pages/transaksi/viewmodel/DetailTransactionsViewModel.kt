@@ -25,7 +25,7 @@ class DetailTransactionsViewModel(
     private val trx : TransactionsRepository
 ) : ViewModel() {
 
-    var TransactionsDetailState: DetailTransactionsUiState by mutableStateOf(DetailTransactionsUiState.Loading)
+    var transactionsDetailState: DetailTransactionsUiState by mutableStateOf(DetailTransactionsUiState.Loading)
         private set
 
     private val _idTransactions: Int = checkNotNull(savedStateHandle[DestinasiDetailTransactions.IdTransactions])
@@ -36,8 +36,8 @@ class DetailTransactionsViewModel(
 
     fun getTransactionsbyId() {
         viewModelScope.launch {
-            TransactionsDetailState = DetailTransactionsUiState.Loading
-            TransactionsDetailState = try {
+            transactionsDetailState = DetailTransactionsUiState.Loading
+            transactionsDetailState = try {
                 val tickets = trx.getTransactionsById(_idTransactions)
                 Log.d("TicketDetails", "Response: $tickets")
                 DetailTransactionsUiState.Success(tickets)
