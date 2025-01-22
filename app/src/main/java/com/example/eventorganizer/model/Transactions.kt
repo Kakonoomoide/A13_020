@@ -19,23 +19,23 @@ data class TransactionDetailResponse (
 @Serializable
 data class Transactions (
     @SerialName("id_transaksi")
-    val idTransaksi: Long,
+    val idTransaksi: Int,
 
     @SerialName("id_tiket")
-    val idTiket: Long,
+    val idTiket: Int,
 
     @SerialName("jumlah_tiket")
-    val jumlahTiket: Long,
+    val jumlahTiket: Int,
 
     @SerialName("jumlah_pembayaran")
-    val jumlahPembayaran: Long,
+    val jumlahPembayaran: Int,
 
     @SerialName("tanggal_transaksi")
-    val tanggalTransaksi: String,
+    val tanggalTransaksi: String? = "",
 
     @SerialName("nama_event")
-    val namaEvent: String,
+    val namaEvent: String? = "",
 
     @SerialName("nama_peserta")
-    val namaPeserta: String
+    val namaPeserta: String? = ""
 )
