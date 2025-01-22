@@ -35,7 +35,7 @@ object DestinasiEntryTransactions : DestinasiNavigasi {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InsertTicketsView(
+fun InsertTransactionsView(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: InsertTransactionsViewModel = viewModel(factory = PenyediaViewModel.Factory)

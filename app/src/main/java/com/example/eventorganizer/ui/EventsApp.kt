@@ -12,6 +12,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.example.eventorganizer.ui.navigation.EventsNavigation
 import com.example.eventorganizer.ui.navigation.ParticipantsNavigation
 import com.example.eventorganizer.ui.navigation.TiketNavigation
+import com.example.eventorganizer.ui.navigation.TransactionNavigation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +31,8 @@ fun EventsApp(
         ){
             //EventsNavigation()
             //TiketNavigation()
-            ParticipantsNavigation()
+            //ParticipantsNavigation()
+            TransactionNavigation()
         }
     }
 }
