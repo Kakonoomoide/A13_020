@@ -9,7 +9,7 @@ import com.example.eventorganizer.model.Transactions
 import com.example.eventorganizer.repository.TransactionsRepository
 import kotlinx.coroutines.launch
 
-class InsertTicketsViewModel(private val trx: TransactionsRepository): ViewModel(){
+class InsertTransactionsViewModel(private val trx: TransactionsRepository): ViewModel(){
     var uiState by mutableStateOf(InsertTransactionsUiState())
         private set
 

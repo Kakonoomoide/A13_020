@@ -18,6 +18,10 @@ import com.example.eventorganizer.ui.pages.tiket.viewmodel.DetailTicketsViewMode
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.HomeTicketsViewModel
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.InsertTicketsViewModel
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.UpdateTicketsViewModel
+import com.example.eventorganizer.ui.pages.transaksi.view.HomeTransactionsView
+import com.example.eventorganizer.ui.pages.transaksi.viewmodel.DetailTransactionsViewModel
+import com.example.eventorganizer.ui.pages.transaksi.viewmodel.HomeTransactionsViewModel
+import com.example.eventorganizer.ui.pages.transaksi.viewmodel.InsertTransactionsViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
@@ -126,6 +130,33 @@ object PenyediaViewModel {
                 aplikasiEO()
                     .container
                     .participantsRepository
+            )
+        }
+
+        // Transaksi
+        // home viewmodel
+        initializer {
+            HomeTransactionsViewModel(
+                aplikasiEO()
+                    .container
+                    .transactionsRepository
+            )
+        }
+        // insert viewmodel
+        initializer {
+            InsertTransactionsViewModel(
+                aplikasiEO()
+                    .container
+                    .transactionsRepository
+            )
+        }
+        // detail viewmodel
+        initializer {
+            DetailTransactionsViewModel(
+                createSavedStateHandle(),
+                aplikasiEO()
+                    .container
+                    .transactionsRepository
             )
         }
     }
