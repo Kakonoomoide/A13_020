@@ -29,7 +29,7 @@ import com.example.eventorganizer.ui.pages.transaksi.viewmodel.InsertTransaction
 import kotlinx.coroutines.launch
 
 object DestinasiEntryTransactions : DestinasiNavigasi {
-    override val route = "transactions_entry"
+    override val route = "item_entry_transactions"
     override val titleRes = "Entry Transactions"
 }
 

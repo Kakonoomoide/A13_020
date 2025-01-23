@@ -40,7 +40,7 @@ import com.example.eventorganizer.ui.pages.peserta.viewmodel.HomeParticipantView
 import com.example.eventorganizer.ui.pages.peserta.viewmodel.ParticipantsHomeUiState
 
 object DestinasiHomeParticipants : DestinasiNavigasi {
-    override val route = "home"
+    override val route = "home_participants"
     override val titleRes = "Home Participants"
 }
 

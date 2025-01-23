@@ -32,7 +32,7 @@ import com.example.eventorganizer.ui.pages.event.viewmodel.EventsDetailViewModel
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 
 object DestinasiDetail: DestinasiNavigasi {
-    override val route = "detail"
+    override val route = "detail_events"
     override val titleRes = "Detail Event"
     const val IdEvent = "idEvent"
     val routesWithArg = "$route/{$IdEvent}"

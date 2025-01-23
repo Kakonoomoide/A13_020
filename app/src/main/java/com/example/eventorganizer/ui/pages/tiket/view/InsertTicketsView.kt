@@ -29,7 +29,7 @@ import com.example.eventorganizer.ui.pages.tiket.viewmodel.InsertTicketsViewMode
 import kotlinx.coroutines.launch
 
 object DestinasiEntryTiket : DestinasiNavigasi {
-    override val route = "tickets_entry"
+    override val route = "item_entry_tickets"
     override val titleRes = "Entry Tickets"
 }
 

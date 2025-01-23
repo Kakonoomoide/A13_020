@@ -40,7 +40,7 @@ import com.example.eventorganizer.ui.pages.transaksi.viewmodel.HomeTransactionsU
 import com.example.eventorganizer.ui.pages.transaksi.viewmodel.HomeTransactionsViewModel
 
 object DestinasiHomeTransactions : DestinasiNavigasi {
-    override val route = "home"
+    override val route = "home_transactions"
     override val titleRes = "Home Transactions"
 }
 

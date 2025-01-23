@@ -28,7 +28,7 @@ import com.example.eventorganizer.ui.pages.transaksi.viewmodel.DetailTransaction
 import com.example.eventorganizer.ui.pages.transaksi.viewmodel.DetailTransactionsViewModel
 
 object DestinasiDetailTransactions: DestinasiNavigasi {
-    override val route = "detail"
+    override val route = "detail_transactions"
     override val titleRes = "Detail Transactions"
     const val IdTransactions = "idTransaksi"
     val routesWithArg = "$route/{$IdTransactions}"

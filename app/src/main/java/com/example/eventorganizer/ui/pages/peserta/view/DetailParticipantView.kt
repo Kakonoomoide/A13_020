@@ -32,7 +32,7 @@ import com.example.eventorganizer.ui.pages.peserta.viewmodel.DetailParticipantsV
 import com.example.eventorganizer.ui.pages.peserta.viewmodel.ParticipantsDetailUiState
 
 object DestinasiDetailParticipants: DestinasiNavigasi {
-    override val route = "detail"
+    override val route = "detail_participants"
     override val titleRes = "Detail Participants"
     const val IdParticipants = "idPeserta"
     val routesWithArg = "$route/{$IdParticipants}"

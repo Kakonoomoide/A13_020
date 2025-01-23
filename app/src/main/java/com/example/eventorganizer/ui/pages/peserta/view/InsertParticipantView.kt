@@ -38,7 +38,7 @@ import com.example.eventorganizer.ui.pages.peserta.viewmodel.ParticipantsInsertU
 import kotlinx.coroutines.launch
 
 object DestinasiEntryParticipants : DestinasiNavigasi {
-    override val route = "participants_entry"
+    override val route = "item_entry_participants"
     override val titleRes = "Entry Participants"
 }
 

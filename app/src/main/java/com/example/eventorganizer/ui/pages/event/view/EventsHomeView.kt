@@ -39,8 +39,8 @@ import com.example.eventorganizer.ui.pages.event.viewmodel.EventsHomeViewModel
 import com.example.eventorganizer.ui.pages.event.viewmodel.HomeUiState
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 
-object DestinasiHome : DestinasiNavigasi {
-    override val route = "home"
+object DestinasiHomeEvents : DestinasiNavigasi {
+    override val route = "home_events"
     override val titleRes = "Home Event"
 }
 
@@ -57,7 +57,7 @@ fun EventsHomeView(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CoustumeTopAppBar(
-                title = DestinasiHome.titleRes,
+                title = DestinasiHomeEvents.titleRes,
                 canNavigateBack = false,
                 scrollBehavior = scrollBehavior,
                 onRefresh = {

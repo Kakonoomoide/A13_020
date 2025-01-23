@@ -32,7 +32,7 @@ import com.example.eventorganizer.ui.pages.tiket.viewmodel.DetailTicketsUiState
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.DetailTicketsViewModel
 
 object DestinasiDetailTickets: DestinasiNavigasi {
-    override val route = "detail"
+    override val route = "detail_tickets"
     override val titleRes = "Detail Tickets"
     const val IdTickets = "idTiket"
     val routesWithArg = "$route/{$IdTickets}"

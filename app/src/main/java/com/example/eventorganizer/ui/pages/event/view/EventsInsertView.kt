@@ -39,7 +39,7 @@ import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 import kotlinx.coroutines.launch
 
 object DestinasiEntry : DestinasiNavigasi {
-    override val route = "item_entry"
+    override val route = "item_entry_events"
     override val titleRes = "Entry Event"
 }
 
