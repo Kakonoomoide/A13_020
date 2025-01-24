@@ -174,6 +174,7 @@ private fun NavGraphBuilder.addParticipantsNavigation(navController: NavHostCont
 
 // Navigasi untuk Tickets
 private fun NavGraphBuilder.addTicketsNavigation(navController: NavHostController) {
+    val eventContainerApp = EventContainerApp()
     composable(DestinasiHomeTiket.route) {
         HomeTicketsView(
             navigateToltemEntry = { navController.navigate(DestinasiEntryTiket.route) },
@@ -183,7 +184,6 @@ private fun NavGraphBuilder.addTicketsNavigation(navController: NavHostControlle
         )
     }
     composable(DestinasiEntryTiket.route) {
-        val eventContainerApp = EventContainerApp()
         InsertTicketsView(
             eventsRepo = eventContainerApp.eventsRepository,
             participantsRepo = eventContainerApp.participantsRepository,
@@ -214,7 +214,6 @@ private fun NavGraphBuilder.addTicketsNavigation(navController: NavHostControlle
         DestinasiUpdateTickets.routesWithArg,
         arguments = listOf(navArgument(DestinasiUpdateTickets.IdTickets) { type = NavType.IntType })
     ) {
-        val eventContainerApp = EventContainerApp()
         val idTiket = it.arguments?.getInt(DestinasiUpdateTickets.IdTickets)
         idTiket?.let {
             UpdateTicketsView(
@@ -229,6 +228,7 @@ private fun NavGraphBuilder.addTicketsNavigation(navController: NavHostControlle
 
 // Navigasi untuk Transactions
 private fun NavGraphBuilder.addTransactionsNavigation(navController: NavHostController) {
+    val eventContainerApp = EventContainerApp()
     composable(DestinasiHomeTransactions.route) {
         HomeTransactionsView(
             navigateToltemEntry = { navController.navigate(DestinasiEntryTransactions.route) },
@@ -238,9 +238,11 @@ private fun NavGraphBuilder.addTransactionsNavigation(navController: NavHostCont
         )
     }
     composable(DestinasiEntryTransactions.route) {
-        InsertTransactionsView(navigateBack = {
-            navController.navigate(DestinasiHomeTransactions.route) {
-                popUpTo(DestinasiHomeTransactions.route) { inclusive = true }
+        InsertTransactionsView(
+            ticketsRepository = eventContainerApp.ticketsRepository,
+            navigateBack = {
+                navController.navigate(DestinasiHomeTransactions.route) {
+                    popUpTo(DestinasiHomeTransactions.route) { inclusive = true }
             }
         })
     }

@@ -15,13 +15,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.eventorganizer.model.Tickets
+import com.example.eventorganizer.repository.TicketsRepository
 import com.example.eventorganizer.ui.PenyediaViewModel
 import com.example.eventorganizer.ui.costumwidget.CoustumeTopAppBar
+import com.example.eventorganizer.ui.costumwidget.DynamicSelectedField
+import com.example.eventorganizer.ui.costumwidget.DynamicSelectedFieldInt
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 import com.example.eventorganizer.ui.pages.transaksi.viewmodel.InsertTransactionsUiEvent
 import com.example.eventorganizer.ui.pages.transaksi.viewmodel.InsertTransactionsUiState
@@ -38,6 +47,7 @@ object DestinasiEntryTransactions : DestinasiNavigasi {
 fun InsertTransactionsView(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
+    ticketsRepository: TicketsRepository,
     viewModel: InsertTransactionsViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -63,6 +73,7 @@ fun InsertTransactionsView(
                     navigateBack()
                 }
             },
+            ticketsRepository = ticketsRepository,
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
@@ -76,6 +87,7 @@ fun EntryBody(
     insertUiState: InsertTransactionsUiState,
     onSiswaValueChange: (InsertTransactionsUiEvent) -> Unit,
     onSaveClick: () -> Unit,
+    ticketsRepository: TicketsRepository,
     modifier: Modifier = Modifier
 ){
     Column(
@@ -85,7 +97,8 @@ fun EntryBody(
         FormInput(
             insertUiEvent = insertUiState.insertTransactionsUiEvent,
             onValueChange = onSiswaValueChange,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            ticketsRepository = ticketsRepository
         )
         Button(
             onClick = onSaveClick,
@@ -103,23 +116,39 @@ fun FormInput(
     insertUiEvent: InsertTransactionsUiEvent,
     onValueChange: (InsertTransactionsUiEvent) -> Unit,
     modifier: Modifier = Modifier,
+    ticketsRepository: TicketsRepository,
     enabled: Boolean = true
-){
+) {
+    val coroutineScope = rememberCoroutineScope()
+    var tickets by remember { mutableStateOf(emptyList<Tickets>()) }
+    var selectedTicketsId by remember { mutableStateOf(0) }
+    val ticketPrice = remember { mutableStateOf(0) }
+
+    // Fetch ticket data asynchronously
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            tickets = ticketsRepository.getAllTickets().data
+            val selectedTicket = tickets.find { it.idTiket == selectedTicketsId }
+            ticketPrice.value = selectedTicket?.hargaTiket ?: 0
+        }
+    }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
-    ){
+    ) {
         // id Tiket
-        OutlinedTextField(
-            value = insertUiEvent.idTiket.toString(),
-            onValueChange = {
-                val newIdTiket = it.toIntOrNull() ?: 0  // Convert back to Int (handle invalid input)
-                onValueChange(insertUiEvent.copy(idTiket = newIdTiket))
+        DynamicSelectedFieldInt(
+            selectedValue = selectedTicketsId,
+            options = tickets.map { it.idTiket },
+            label = "Pilih Tiket",
+            onValueChangedEvent = { selectedId ->
+                selectedTicketsId = selectedId
+                val selectedTicket = tickets.find { it.idTiket == selectedId }
+                ticketPrice.value = selectedTicket?.hargaTiket ?: 0
+                onValueChange(insertUiEvent.copy(idTiket = selectedTicket?.idTiket ?: 0))
             },
-            label = { Text("Id Tiket") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = false
+            modifier = Modifier.fillMaxWidth()
         )
 
         // jumlah Tiket
@@ -127,7 +156,8 @@ fun FormInput(
             value = insertUiEvent.jumlahTiket.toString(),
             onValueChange = {
                 val newJumlahTiket = it.toIntOrNull() ?: 0  // Convert back to Int (handle invalid input)
-                onValueChange(insertUiEvent.copy(jumlahTiket = newJumlahTiket))
+                val newJumlahPembayaran = newJumlahTiket * ticketPrice.value
+                onValueChange(insertUiEvent.copy(jumlahTiket = newJumlahTiket, jumlahPembayaran = newJumlahPembayaran))
             },
             label = { Text("Jumlah Tiket") },
             modifier = Modifier.fillMaxWidth(),
@@ -135,35 +165,33 @@ fun FormInput(
             singleLine = false
         )
 
-        // jumlah pembayaran
+        // jumlah pembayaran (calculated automatically based on jumlahTiket and ticketPrice)
         OutlinedTextField(
             value = insertUiEvent.jumlahPembayaran.toString(),
-            onValueChange = {
-                val newJumlahPembayaran = it.toIntOrNull() ?: 0  // Convert back to Int (handle invalid input)
-                onValueChange(insertUiEvent.copy(jumlahPembayaran = newJumlahPembayaran))
-            },
-            label = { Text("Jumalah Pembayaran") },
+            onValueChange = {},
+            label = { Text("Jumlah Pembayaran") },
             modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
+            enabled = false,
             singleLine = false
         )
 
         // Tanggal Transaksi
         OutlinedTextField(
             value = insertUiEvent.tanggalTransaksi.toString(),
-            onValueChange = {onValueChange(insertUiEvent.copy(tanggalTransaksi = it))},
+            onValueChange = { onValueChange(insertUiEvent.copy(tanggalTransaksi = it)) },
             label = { Text("Tanggal Transaksi") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = false
         )
 
-        if(enabled) {
+        if (enabled) {
             Text(
                 text = "Isi Semua Data!",
                 modifier = Modifier.padding(12.dp)
             )
         }
+
         Divider(
             thickness = 8.dp,
             modifier = Modifier.padding(12.dp)
