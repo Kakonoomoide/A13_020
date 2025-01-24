@@ -3,12 +3,16 @@ package com.example.eventorganizer.ui.navigation
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.eventorganizer.dependeciesinjection.EventContainerApp
+import com.example.eventorganizer.repository.EventsRepository
+import com.example.eventorganizer.repository.ParticipantsRepository
 import com.example.eventorganizer.ui.home.view.DestinasiHomePage
 import com.example.eventorganizer.ui.home.view.HomePageView
 import com.example.eventorganizer.ui.pages.event.view.DestinasiDetail
@@ -50,233 +54,209 @@ fun PengelolaHalaman(
         navController = navController,
         startDestination = DestinasiHomePage.route,
     ) {
-        // home page
-        composable(
-            route = DestinasiHomePage.route
-        ) {
+        // Home Page
+        composable(DestinasiHomePage.route) {
             HomePageView(
-                eventsPageBttn = {
-                    navController.navigate(DestinasiHomeEvents.route)
-                },
-                participantPageBttn = {
-                    navController.navigate(DestinasiHomeParticipants.route)
-                },
-                ticketPageBttn = {
-                    navController.navigate(DestinasiHomeTiket.route)
-                },
-                transactionPageBttn = {
-                    navController.navigate(DestinasiHomeTransactions.route)
-                }
+                eventsPageBttn = { navController.navigate(DestinasiHomeEvents.route) },
+                participantPageBttn = { navController.navigate(DestinasiHomeParticipants.route) },
+                ticketPageBttn = { navController.navigate(DestinasiHomeTiket.route) },
+                transactionPageBttn = { navController.navigate(DestinasiHomeTransactions.route) }
             )
         }
 
-        //events
-        // home
-        composable(DestinasiHomeEvents.route){
-            EventsHomeView(
-                navigateToltemEntry = { navController.navigate(DestinasiEntry.route) },
-                onDetailClick = { idEvent ->
-                    navController.navigate("${DestinasiDetail.route}/$idEvent")
-                }
-            )
-        }
+        // Events
+        addEventsNavigation(navController)
 
-        // insert
-        composable(DestinasiEntry.route) {
-            EventsInsertView(navigateBack = {
-                navController.navigate(DestinasiHomeEvents.route){
-                    popUpTo(DestinasiHomeEvents.route){
-                        inclusive = true
-                    }
-                }
-            })
-        }
+        // Participants
+        addParticipantsNavigation(navController)
 
-        // detail
-        composable(
-            DestinasiDetail.routesWithArg, arguments = listOf(
-                navArgument(DestinasiDetail.IdEvent) {
-                    type = NavType.IntType }
-            )){
-            val idEvent = it.arguments?.getInt(DestinasiDetail.IdEvent)
-            idEvent?.let { idEvent ->
-                EventsDetailView(
-                    navigateToItemUpdate = { navController.navigate("${DestinasiUpdate.route}/$idEvent") },
-                    navigateBack = { navController.navigate(DestinasiHomeEvents.route) {
+        // Tickets
+        addTicketsNavigation(navController)
+
+        // Transactions
+        addTransactionsNavigation(navController)
+    }
+}
+
+// Navigasi untuk Events
+private fun NavGraphBuilder.addEventsNavigation(navController: NavHostController) {
+    composable(DestinasiHomeEvents.route) {
+        EventsHomeView(
+            navigateToltemEntry = { navController.navigate(DestinasiEntry.route) },
+            onDetailClick = { idEvent ->
+                navController.navigate("${DestinasiDetail.route}/$idEvent")
+            }
+        )
+    }
+    composable(DestinasiEntry.route) {
+        EventsInsertView(navigateBack = {
+            navController.navigate(DestinasiHomeEvents.route) {
+                popUpTo(DestinasiHomeEvents.route) { inclusive = true }
+            }
+        })
+    }
+    composable(
+        DestinasiDetail.routesWithArg,
+        arguments = listOf(navArgument(DestinasiDetail.IdEvent) { type = NavType.IntType })
+    ) {
+        val idEvent = it.arguments?.getInt(DestinasiDetail.IdEvent)
+        idEvent?.let { id ->
+            EventsDetailView(
+                navigateToItemUpdate = { navController.navigate("${DestinasiUpdate.route}/$id") },
+                navigateBack = {
+                    navController.navigate(DestinasiHomeEvents.route) {
                         popUpTo(DestinasiHomeEvents.route) { inclusive = true }
-                    }}
-                )
-            }
-        }
-
-        // update
-        composable(
-            DestinasiUpdate.routesWithArg, arguments = listOf(
-                navArgument(DestinasiDetail.IdEvent){
-                    type = NavType.IntType }
-            )){
-            val idEvent = it.arguments?.getInt(DestinasiUpdate.IdEvent)
-            idEvent?.let { idEvents ->
-                EventsUpdateView(
-                    onBack = { navController.popBackStack() },
-                    onNavigate = { navController.popBackStack() }
-                )
-            }
-        }
-
-
-        //participants
-        // home
-        composable(DestinasiHomeParticipants.route){
-            ParticipantsHomeView(
-                navigateToltemEntry = { navController.navigate(DestinasiEntryParticipants.route) },
-                onDetailClick = { idPeserta ->
-                    Log.d("ParticipantsHome", "ID Peserta: $idPeserta")
-                    navController.navigate("${DestinasiDetailParticipants.route}/$idPeserta")
+                    }
                 }
             )
         }
-
-        // insert
-        composable(DestinasiEntryParticipants.route) {
-            ParticipantsInsertView(navigateBack = {
-                navController.navigate(DestinasiHomeParticipants.route){
-                    popUpTo(DestinasiHomeParticipants.route){
-                        inclusive = true
-                    }
-                }
-            })
-        }
-
-        // detail
-        composable(
-            DestinasiDetailParticipants.routesWithArg, arguments = listOf(
-                navArgument(DestinasiDetailParticipants.IdParticipants) {
-                    type = NavType.IntType }
-            )){
-            val idPrcp = it.arguments?.getInt(DestinasiDetailParticipants.IdParticipants)
-            idPrcp?.let { idPeserta ->
-                ParticipantsDetailView(
-                    navigateToItemUpdate = { navController.navigate("${DestinasiUpdateParticipants.route}/$idPeserta") },
-                    navigateBack = { navController.navigate(DestinasiHomeParticipants.route) {
-                        popUpTo(DestinasiHomeParticipants.route) {
-                            inclusive = true
-                        }
-                    }}
-                )
-            }
-        }
-
-        // update
-        composable(
-            DestinasiUpdateParticipants.routesWithArg, arguments = listOf(
-                navArgument(DestinasiUpdateParticipants.IdParticipants){
-                    type = NavType.IntType }
-            )){
-            val idPrcp = it.arguments?.getInt(DestinasiUpdateParticipants.IdParticipants)
-            idPrcp?.let { idPeserta ->
-                ParticipantsUpdateView(
-                    onBack = { navController.popBackStack() },
-                    onNavigate = { navController.popBackStack() }
-                )
-            }
-        }
-
-        // tickets
-        // home
-        composable(DestinasiHomeTiket.route){
-            HomeTicketsView(
-                navigateToltemEntry = { navController.navigate(DestinasiEntryTiket.route) },
-                onDetailClick = { idTiket ->
-                    navController.navigate("${DestinasiDetailTickets.route}/$idTiket")
-                }
+    }
+    composable(
+        DestinasiUpdate.routesWithArg,
+        arguments = listOf(navArgument(DestinasiUpdate.IdEvent) { type = NavType.IntType })
+    ) {
+        val idEvent = it.arguments?.getInt(DestinasiUpdate.IdEvent)
+        idEvent?.let {
+            EventsUpdateView(
+                onBack = { navController.popBackStack() },
+                onNavigate = { navController.popBackStack() }
             )
-        }
-
-        // insert
-        composable(DestinasiEntryTiket.route) {
-            InsertTicketsView(navigateBack = {
-                navController.navigate(DestinasiHomeTiket.route){
-                    popUpTo(DestinasiHomeTiket.route){
-                        inclusive = true
-                    }
-                }
-            })
-        }
-
-        // detail
-        composable(
-            DestinasiDetailTickets.routesWithArg, arguments = listOf(
-                navArgument(DestinasiDetailTickets.IdTickets) {
-                    type = NavType.IntType }
-            )){
-            val idTiket = it.arguments?.getInt(DestinasiDetailTickets.IdTickets)
-            idTiket?.let { idEvent ->
-                DetailTicketsView(
-                    navigateToItemUpdate = { navController.navigate("${DestinasiUpdateTickets.route}/$idEvent") },
-                    navigateBack = { navController.navigate(DestinasiHomeTiket.route) {
-                        popUpTo(DestinasiHomeTiket.route) {
-                            inclusive = true
-                        }
-                    }}
-                )
-            }
-        }
-
-        // update
-        composable(
-            DestinasiUpdateTickets.routesWithArg, arguments = listOf(
-                navArgument(DestinasiDetailTickets.IdTickets){
-                    type = NavType.IntType }
-            )){
-            val idTiket = it.arguments?.getInt(DestinasiUpdateTickets.IdTickets)
-            idTiket?.let { idEvents ->
-                UpdateTicketsView(
-                    onBack = { navController.popBackStack() },
-                    onNavigate = { navController.popBackStack() }
-                )
-            }
-        }
-
-        // transactions
-        // home
-        composable(DestinasiHomeTransactions.route){
-            HomeTransactionsView(
-                navigateToltemEntry = { navController.navigate(DestinasiEntryTransactions.route) },
-                onDetailClick = { idTransaksi ->
-                    navController.navigate("${DestinasiDetailTransactions.route}/$idTransaksi")
-                }
-            )
-        }
-
-        // insert
-        composable(DestinasiEntryTransactions.route) {
-            InsertTransactionsView(navigateBack = {
-                navController.navigate(DestinasiHomeTransactions.route){
-                    popUpTo(DestinasiHomeTransactions.route){
-                        inclusive = true
-                    }
-                }
-            })
-        }
-
-        // detail
-        composable(
-            DestinasiDetailTransactions.routesWithArg, arguments = listOf(
-                navArgument(DestinasiDetailTransactions.IdTransactions) {
-                    type = NavType.IntType }
-            )){
-            val idTransaksi = it.arguments?.getInt(DestinasiDetailTransactions.IdTransactions)
-            idTransaksi?.let { idEvent ->
-                DetailTransactionsView(
-                    navigateBack = { navController.navigate(DestinasiHomeTransactions.route) {
-                        popUpTo(DestinasiHomeTransactions.route) {
-                            inclusive = true
-                        }
-                    }}
-                )
-            }
         }
     }
 }
 
+// Navigasi untuk Participants
+private fun NavGraphBuilder.addParticipantsNavigation(navController: NavHostController) {
+    composable(DestinasiHomeParticipants.route) {
+        ParticipantsHomeView(
+            navigateToltemEntry = { navController.navigate(DestinasiEntryParticipants.route) },
+            onDetailClick = { idPeserta ->
+                navController.navigate("${DestinasiDetailParticipants.route}/$idPeserta")
+            }
+        )
+    }
+    composable(DestinasiEntryParticipants.route) {
+        ParticipantsInsertView(navigateBack = {
+            navController.navigate(DestinasiHomeParticipants.route) {
+                popUpTo(DestinasiHomeParticipants.route) { inclusive = true }
+            }
+        })
+    }
+    composable(
+        DestinasiDetailParticipants.routesWithArg,
+        arguments = listOf(navArgument(DestinasiDetailParticipants.IdParticipants) { type = NavType.IntType })
+    ) {
+        val idPeserta = it.arguments?.getInt(DestinasiDetailParticipants.IdParticipants)
+        idPeserta?.let {
+            ParticipantsDetailView(
+                navigateToItemUpdate = { navController.navigate("${DestinasiUpdateParticipants.route}/$it") },
+                navigateBack = {
+                    navController.navigate(DestinasiHomeParticipants.route) {
+                        popUpTo(DestinasiHomeParticipants.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+    }
+    composable(
+        DestinasiUpdateParticipants.routesWithArg,
+        arguments = listOf(navArgument(DestinasiUpdateParticipants.IdParticipants) { type = NavType.IntType })
+    ) {
+        val idPeserta = it.arguments?.getInt(DestinasiUpdateParticipants.IdParticipants)
+        idPeserta?.let {
+            ParticipantsUpdateView(
+                onBack = { navController.popBackStack() },
+                onNavigate = { navController.popBackStack() }
+            )
+        }
+    }
+}
+
+// Navigasi untuk Tickets
+private fun NavGraphBuilder.addTicketsNavigation(navController: NavHostController) {
+    composable(DestinasiHomeTiket.route) {
+        HomeTicketsView(
+            navigateToltemEntry = { navController.navigate(DestinasiEntryTiket.route) },
+            onDetailClick = { idTiket ->
+                navController.navigate("${DestinasiDetailTickets.route}/$idTiket")
+            }
+        )
+    }
+    composable(DestinasiEntryTiket.route) {
+        val eventContainerApp = EventContainerApp()
+        InsertTicketsView(
+            eventsRepo = eventContainerApp.eventsRepository,
+            participantsRepo = eventContainerApp.participantsRepository,
+            navigateBack = {
+                navController.navigate(DestinasiHomeTiket.route) {
+                    popUpTo(DestinasiHomeTiket.route) { inclusive = true }
+            }
+        })
+    }
+
+    composable(
+        DestinasiDetailTickets.routesWithArg,
+        arguments = listOf(navArgument(DestinasiDetailTickets.IdTickets) { type = NavType.IntType })
+    ) {
+        val idTiket = it.arguments?.getInt(DestinasiDetailTickets.IdTickets)
+        idTiket?.let {
+            DetailTicketsView(
+                navigateToItemUpdate = { navController.navigate("${DestinasiUpdateTickets.route}/$it") },
+                navigateBack = {
+                    navController.navigate(DestinasiHomeTiket.route) {
+                        popUpTo(DestinasiHomeTiket.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+    }
+    composable(
+        DestinasiUpdateTickets.routesWithArg,
+        arguments = listOf(navArgument(DestinasiUpdateTickets.IdTickets) { type = NavType.IntType })
+    ) {
+        val eventContainerApp = EventContainerApp()
+        val idTiket = it.arguments?.getInt(DestinasiUpdateTickets.IdTickets)
+        idTiket?.let {
+            UpdateTicketsView(
+                onBack = { navController.popBackStack() },
+                onNavigate = { navController.popBackStack() },
+                eventsRepo = eventContainerApp.eventsRepository,
+                participantsRepo = eventContainerApp.participantsRepository,
+            )
+        }
+    }
+}
+
+// Navigasi untuk Transactions
+private fun NavGraphBuilder.addTransactionsNavigation(navController: NavHostController) {
+    composable(DestinasiHomeTransactions.route) {
+        HomeTransactionsView(
+            navigateToltemEntry = { navController.navigate(DestinasiEntryTransactions.route) },
+            onDetailClick = { idTransaksi ->
+                navController.navigate("${DestinasiDetailTransactions.route}/$idTransaksi")
+            }
+        )
+    }
+    composable(DestinasiEntryTransactions.route) {
+        InsertTransactionsView(navigateBack = {
+            navController.navigate(DestinasiHomeTransactions.route) {
+                popUpTo(DestinasiHomeTransactions.route) { inclusive = true }
+            }
+        })
+    }
+    composable(
+        DestinasiDetailTransactions.routesWithArg,
+        arguments = listOf(navArgument(DestinasiDetailTransactions.IdTransactions) { type = NavType.IntType })
+    ) {
+        val idTransaksi = it.arguments?.getInt(DestinasiDetailTransactions.IdTransactions)
+        idTransaksi?.let {
+            DetailTransactionsView(
+                navigateBack = {
+                    navController.navigate(DestinasiHomeTransactions.route) {
+                        popUpTo(DestinasiHomeTransactions.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+    }
+}

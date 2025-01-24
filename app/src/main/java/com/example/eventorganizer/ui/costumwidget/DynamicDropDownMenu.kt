@@ -20,28 +20,24 @@ import androidx.compose.ui.Modifier
 fun DynamicSelectedField(
     selectedValue: String,
     options: List<String>,
-    lable: String,
+    label: String,  // Corrected the parameter name from lable to label
     onValueChangedEvent: (String) -> Unit,
     modifier: Modifier = Modifier
-){
-    var expanded by remember {
-        mutableStateOf(false)
-    }
+) {
+    var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = {expanded = !expanded},
+        onExpandedChange = { expanded = !expanded },
         modifier = modifier
     ) {
         OutlinedTextField(
             readOnly = true,
             value = selectedValue,
             onValueChange = {},
-            label = { Text(text = lable)},
+            label = { Text(text = label) },  // Using the corrected parameter name
             trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             colors = OutlinedTextFieldDefaults.colors(),
             modifier = Modifier
@@ -51,16 +47,16 @@ fun DynamicSelectedField(
 
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = {expanded = false}
+            onDismissRequest = { expanded = false }
         ) {
-            options.forEach {
-                    options: String -> DropdownMenuItem(
-                text = { Text(text = options)},
-                onClick = {
-                    expanded = false
-                    onValueChangedEvent(options)
-                }
-            )
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(text = option) },
+                    onClick = {
+                        expanded = false
+                        onValueChangedEvent(option)
+                    }
+                )
             }
         }
     }

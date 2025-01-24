@@ -9,6 +9,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.eventorganizer.repository.EventsRepository
+import com.example.eventorganizer.repository.ParticipantsRepository
 import com.example.eventorganizer.ui.PenyediaViewModel
 import com.example.eventorganizer.ui.costumwidget.CoustumeTopAppBar
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
@@ -31,6 +33,8 @@ fun UpdateTicketsView(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     onNavigate:()-> Unit,
+    eventsRepo: EventsRepository,  // Menambahkan repository events
+    participantsRepo: ParticipantsRepository,  // Menambahkan repository participants
     viewModel: UpdateTicketsViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val coroutineScope = rememberCoroutineScope()
@@ -55,11 +59,13 @@ fun UpdateTicketsView(
                 coroutineScope.launch {
                     viewModel.updateTkt()
                     delay(600)
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         onNavigate()
                     }
                 }
-            }
+            },
+            eventsRepo = eventsRepo,
+            participantsRepo = participantsRepo
         )
     }
 }
