@@ -124,13 +124,13 @@ fun ItemDetailEvnt(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            ComponentDetailEvnt(judul = "Id Event", isinya = participants.idPeserta.toString())
+            ComponentDetailEvnt(judul = "Id Peserta", isinya = participants.idPeserta.toString())
             Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailEvnt(judul = "Nama Event", isinya = participants.namaPeserta)
+            ComponentDetailEvnt(judul = "Nama Peserta", isinya = participants.namaPeserta)
             Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailEvnt(judul = "Deskripsi Event", isinya = participants.email)
+            ComponentDetailEvnt(judul = "Email", isinya = participants.email)
             Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailEvnt(judul = "Tanggal Event", isinya = participants.nomorTelepon)
+            ComponentDetailEvnt(judul = "no Telp", isinya = participants.nomorTelepon)
             Spacer(modifier = Modifier.padding(5.dp))
         }
     }
