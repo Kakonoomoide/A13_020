@@ -14,7 +14,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,16 +33,21 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.eventorganizer.model.Tickets
+import com.example.eventorganizer.model.Transactions
+import com.example.eventorganizer.repository.TicketsRepository
+import com.example.eventorganizer.repository.TransactionsRepository
 import com.example.eventorganizer.ui.PenyediaViewModel
 import com.example.eventorganizer.ui.costumwidget.CoustumeTopAppBar
 import com.example.eventorganizer.ui.navigation.DestinasiNavigasi
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.HomeTicketsUiState
 import com.example.eventorganizer.ui.pages.tiket.viewmodel.HomeTicketsViewModel
-
+import okhttp3.internal.wait
 
 object DestinasiHomeTiket : DestinasiNavigasi {
     override val route = "home_tickets"
@@ -51,6 +60,8 @@ fun HomeTicketsView(
     navigateToltemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
+    ticketsData: List<Tickets>, // Accept tickets data
+    transactionsData: List<Transactions>, // Accept transactions data
     viewModel: HomeTicketsViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -84,7 +95,9 @@ fun HomeTicketsView(
             onDeleteClick = {
                 viewModel.deleteTkt(it.idTiket)
                 viewModel.getTkt()
-            }
+            },
+            ticketsData = ticketsData,
+            transactionsData = transactionsData
         )
     }
 }
@@ -96,6 +109,8 @@ fun HomeStatus(
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit,
     onDeleteClick: (Tickets) -> Unit = {},
+    ticketsData: List<Tickets>, // Accept tickets data
+    transactionsData: List<Transactions> // Accept transactions data
 ){
     when (homeUiState) {
         is HomeTicketsUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
@@ -114,7 +129,9 @@ fun HomeStatus(
                     },
                     onDeleteClick = {
                         onDeleteClick(it)
-                    }
+                    },
+                    ticketsData = ticketsData,
+                    transactionsData = transactionsData
                 )
             }
         is HomeTicketsUiState.Error -> OnError(
@@ -158,6 +175,8 @@ fun MhsLayout(
     modifier: Modifier = Modifier,
     onDetailClick: (Tickets) -> Unit,
     onDeleteClick: (Tickets) -> Unit = {},
+    ticketsData: List<Tickets>, // Accept tickets data
+    transactionsData: List<Transactions> // Accept transactions data
 ) {
     LazyColumn(
         modifier = modifier,
@@ -174,7 +193,9 @@ fun MhsLayout(
                     },
                 onDeleteClick = {
                     onDeleteClick(ticket)
-                }
+                },
+                ticketsData = ticketsData,
+                transactionsData = transactionsData
             )
         }
     }
@@ -184,12 +205,21 @@ fun MhsLayout(
 fun TicketsCardDispaly(
     tickets: Tickets,
     modifier: Modifier = Modifier,
-    onDeleteClick: (Tickets) -> Unit = {}
+    onDeleteClick: (Tickets) -> Unit = {},
+    ticketsData: List<Tickets>, // Accept tickets data
+    transactionsData: List<Transactions> // Accept transactions data
 ) {
+    val ticketColors = getTicketsCardColor(ticketsData, transactionsData)
+    val cardColorCh = ticketColors[tickets.idTiket] ?: Color(0xFF4CAF50)
+
+    // Tentukan apakah tiket habis
+    val isSoldOut = cardColorCh == Color(0xFFFD8A8A) // Merah berarti sold out
+
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = cardColorCh)
     ) {
         Column(
             modifier = Modifier
@@ -202,8 +232,19 @@ fun TicketsCardDispaly(
             ) {
                 Text(
                     text = tickets.idTiket.toString(),
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                 )
+
+                // Jika tiket habis, tampilkan "SOLD OUT!!!"
+                if (isSoldOut) {
+                    Text(
+                        text = " SOLD OUT!!!",
+                        color = Color(0xFFAF1740), // Warna merah untuk sold out
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
+
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = { onDeleteClick(tickets) }) {
                     Icon(
@@ -212,30 +253,111 @@ fun TicketsCardDispaly(
                     )
                 }
             }
+
+            // Nama Event
             tickets.namaEvent?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Info, // Ikon untuk nama event
+                        contentDescription = "Event Name",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
+                    )
+                }
             }
+
+            // Nama Peserta
             tickets.namaPeserta?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Person, // Ikon untuk nama peserta
+                        contentDescription = "Participant Name",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
+                    )
+                }
             }
+
+            // Tanggal Event
             tickets.tanggalEvent?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.DateRange, // Ikon untuk tanggal event
+                        contentDescription = "Event Date",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
+                    )
+                }
             }
+
+            // Lokasi Event
             tickets.lokasiEvent?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.LocationOn, // Ikon untuk lokasi event
+                        contentDescription = "Event Location",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
+                    )
+                }
             }
         }
     }
+}
+
+
+fun getTicketsCardColor(
+    tickets: List<Tickets>,
+    transactions: List<Transactions>
+): Map<Int, Color> {
+    val ticketColors = mutableMapOf<Int, Color>()
+
+    val ticketGroups = tickets.groupBy { it.idTiket }
+
+    ticketGroups.forEach { (idTiket, ticketGroup) ->
+        val totalCapacity = ticketGroup.sumOf { it.kapasitasTiket }
+
+        val totalSold = transactions.filter { it.idTiket == idTiket }
+            .sumOf { it.jumlahTiket }
+
+        val availableCapacity = totalCapacity - totalSold
+        val availabilityPercentage = if (totalCapacity > 0) (availableCapacity.toFloat() / totalCapacity) * 100 else 0f
+
+        val color = when {
+            availabilityPercentage > 50 -> Color(0xFF708871) // Hijau
+            availabilityPercentage > 0 -> Color(0xFFFDFFAB) // Kuning
+            else -> Color(0xFFFD8A8A) // Merah (Sold Out)
+        }
+
+        ticketColors[idTiket] = color
+    }
+    return ticketColors
 }

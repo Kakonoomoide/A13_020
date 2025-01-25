@@ -1,20 +1,28 @@
 package com.example.eventorganizer.ui.pages.event.view
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -78,7 +86,8 @@ fun EventsHomeView(
         HomeStatus(
             homeUiState = viewModel.evntUiState,
             retryAction = { viewModel.getEvnt() },
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding),
             onDetailClick = onDetailClick,
             onDeleteClick = {
                 viewModel.deleteEvnt(it.idEvent)
@@ -87,6 +96,7 @@ fun EventsHomeView(
         )
     }
 }
+
 
 @Composable
 fun HomeStatus(
@@ -211,18 +221,53 @@ fun EventsCardDispaly(
                     )
                 }
             }
-            Text(
-                text = event.namaEvent,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = event.tanggalEvent,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = event.lokasiEvent,
-                style = MaterialTheme.typography.titleMedium
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Info, // Ikon untuk nama event
+                    contentDescription = "Event Icon",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = event.namaEvent,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.DateRange,
+                    contentDescription = "Date Icon",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = event.tanggalEvent,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.LocationOn,
+                    contentDescription = "Location Icon",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = event.lokasiEvent,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
     }
 }

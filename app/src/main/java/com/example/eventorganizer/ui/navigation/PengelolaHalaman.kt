@@ -1,8 +1,11 @@
 package com.example.eventorganizer.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -11,8 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.eventorganizer.dependeciesinjection.EventContainerApp
-import com.example.eventorganizer.repository.EventsRepository
-import com.example.eventorganizer.repository.ParticipantsRepository
+import com.example.eventorganizer.model.Tickets
+import com.example.eventorganizer.model.Transactions
 import com.example.eventorganizer.ui.home.view.DestinasiHomePage
 import com.example.eventorganizer.ui.home.view.HomePageView
 import com.example.eventorganizer.ui.pages.event.view.DestinasiDetail
@@ -176,11 +179,21 @@ private fun NavGraphBuilder.addParticipantsNavigation(navController: NavHostCont
 private fun NavGraphBuilder.addTicketsNavigation(navController: NavHostController) {
     val eventContainerApp = EventContainerApp()
     composable(DestinasiHomeTiket.route) {
+        var ticketsData by remember { mutableStateOf<List<Tickets>>(emptyList()) }
+        var transactionsData by remember { mutableStateOf<List<Transactions>>(emptyList()) }
+
+        LaunchedEffect(Unit) {
+            ticketsData = eventContainerApp.ticketsRepository.getAllTickets().data
+            transactionsData = eventContainerApp.transactionsRepository.getAllTransactions().data
+        }
+
         HomeTicketsView(
             navigateToltemEntry = { navController.navigate(DestinasiEntryTiket.route) },
             onDetailClick = { idTiket ->
                 navController.navigate("${DestinasiDetailTickets.route}/$idTiket")
-            }
+            },
+            ticketsData = ticketsData,
+            transactionsData = transactionsData
         )
     }
     composable(DestinasiEntryTiket.route) {

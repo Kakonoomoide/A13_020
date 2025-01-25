@@ -1,5 +1,6 @@
 package com.example.eventorganizer.ui.pages.peserta.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,6 +33,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -78,7 +83,8 @@ fun ParticipantsHomeView(
         HomeStatus(
             homeUiState = viewModel.prcpUiState,
             retryAction = { viewModel.getPrcp() },
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding),
             onDetailClick = onDetailClick,
             onDeleteClick = {
                 viewModel.deletePrcp(it.idPeserta)
@@ -211,18 +217,51 @@ fun EventsCardDispaly(
                     )
                 }
             }
-            Text(
-                text = prcp.namaPeserta,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = prcp.email,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = prcp.nomorTelepon,
-                style = MaterialTheme.typography.titleMedium
-            )
+            // Row for participant name with icon
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Person, // Icon for participant name
+                    contentDescription = "Participant Name",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = prcp.namaPeserta,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            // Row for email with icon
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Email, // Icon for email
+                    contentDescription = "Email",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = prcp.email,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            // Row for phone number with icon
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Phone, // Icon for phone number
+                    contentDescription = "Phone Number",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = prcp.nomorTelepon,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
     }
 }

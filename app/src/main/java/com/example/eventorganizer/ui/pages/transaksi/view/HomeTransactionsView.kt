@@ -14,7 +14,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -211,29 +215,76 @@ fun TicketsCardDispaly(
                     )
                 }
             }
+            // Nama Event
             transactions.namaEvent?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Info, // Ikon untuk nama event
+                        contentDescription = "Event Name",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
             }
+
+            // Nama Peserta
             transactions.namaPeserta?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Person, // Ikon untuk nama peserta
+                        contentDescription = "Participant Name",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
             }
+
+            // Tanggal Transaksi
             transactions.tanggalTransaksi?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.DateRange, // Ikon untuk tanggal transaksi
+                        contentDescription = "Transaction Date",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
             }
+
+            // Jumlah Pembayaran
             transactions.jumlahPembayaran.toString().let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ShoppingCart, // Ikon untuk jumlah pembayaran
+                        contentDescription = "Payment Amount",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
             }
         }
     }
